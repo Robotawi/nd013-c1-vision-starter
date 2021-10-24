@@ -69,6 +69,10 @@ Now you have become one with the data! Congratulations! How will you use this kn
 ```
 python create_splits.py --data_dir /home/workspace/data/
 ```
+Mine is
+```
+python create_splits.py --data_dir /workspaces/object-detection_new/waymo/downloaded_data/processed
+```
 
 NOTE: Keep in mind that your storage is limited. The files should be <ins>moved</ins> and not copied. 
 
@@ -82,18 +86,31 @@ Now we need to edit the config files to change the location of the training and 
 ```
 python edit_config.py --train_dir /home/workspace/data/train/ --eval_dir /home/workspace/data/val/ --batch_size 4 --checkpoint ./training/pretrained-models/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8/checkpoint/ckpt-0 --label_map label_map.pbtxt
 ```
+Mine is 
+```
+python edit_config.py --train_dir /workspaces/object-detection_new/waymo/downloaded_data/processed/train --eval_dir /workspaces/object-detection_new/waymo/downloaded_data/processed/val --batch_size 4 --checkpoint /workspaces/object-detection_new/waymo/downloaded_data/processed/train/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8/checkpoint/ckpt-0 --label_map label_map.pbtxt
+```
 A new config file has been created, `pipeline_new.config`.
 
 ### Training
 
-You will now launch your very first experiment with the Tensorflow object detection API. Create a folder `training/reference`. Move the `pipeline_new.config` to this folder. You will now have to launch two processes: 
+You will now launch your very first experiment with the Tensorflow object detection API. Create a folder `training/reference`. Move the `pipeline_new.config` to this folder. You will now have to launch two processes: **From inside the project directory**
 * a training process:
 ```
 python model_main_tf2.py --model_dir=training/reference/ --pipeline_config_path=training/reference/pipeline_new.config
 ```
+Mine is
+```
+python ./experiments/model_main_tf2.py --model_dir=./experiments/training/reference/ --pipeline_config_path=./experiments/training/reference/pipeline_new.config
+```
+
 * an evaluation process:
 ```
 python model_main_tf2.py --model_dir=training/reference/ --pipeline_config_path=training/reference/pipeline_new.config --checkpoint_dir=training/reference/
+```
+Mine is
+```
+python experiments/model_main_tf2.py --model_dir=experiments/training/reference/ --pipeline_config_path=experiments/training/reference/pipeline_new.config --checkpoint_dir=experiments/training/reference
 ```
 
 NOTE: both processes will display some Tensorflow warnings.
