@@ -177,3 +177,6 @@ The following is a gif video of the inference performance
 
 ![](results/animation.gif)
 
+The generated mp4 video file from the inference (same as above, but with different format) is [here](https://drive.google.com/file/d/1YbW5JiH9MoaTunkmw8smXGggybVXJeNd/view?usp=sharing). 
+
+
