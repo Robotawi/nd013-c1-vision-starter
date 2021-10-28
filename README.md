@@ -169,6 +169,11 @@ Lastly, I want to compare the evaluations of the reference and the improve cases
 ![](results/eval_comp.png)
 
 ![](results/eval_comp2.png)
+
 I noticed there is a very limited number of cyclists in the data, which I think should be reported. It is very important as such cyclists usually go on the road near to cars, not like pedestrians. 
 
+
+The following is a gif video of the inference performance
+
+![](results/animation.gif)
 
