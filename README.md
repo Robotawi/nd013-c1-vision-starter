@@ -1,12 +1,14 @@
 # Object detection in an Urban Environment
 
-## Project purpose
+## Project overview
 
 The aim of the project is to carry our object detection in urban environment for safe self-driving car driving. The project uses data from the [Waymo Open dataset](https://waymo.com/open/). The project uses Tensorflow Object Detection API to train a deep neural netwrok for successful detection. I downloaded the files from the [Google Cloud Bucket](https://console.cloud.google.com/storage/browser/waymo_open_dataset_v_1_2_0_individual_files/) as individual tf records. 
 
-## project steps
+## project setup
 
 I wanted to use my local GPU computer for the project because this is what I will do after the course. I tried to download the data provided in the workspace by Udacity, but there was a problem of mismatch between boxes and objects. Multiple students highlighted that in the workspace. After that, I downloaded the data myself and uses it. 
+
+I struggled to get the GPU on my machine working with the docker container provided with the course, but managed to get it working at the end. I documented the steps [here](https://knowledge.udacity.com/questions/725574#726069). 
 
 ### Dataset analysis
 
@@ -15,16 +17,14 @@ To become one with the data, as the instructor recommends, I implemented the `di
 
 ### Cross validation
 
-Cross validation aims at estimating the performance (or accuracy) of machine learning models. The purpose of cross–validation is to test the ability of a machine learning model to predict new data. In this project, I implemented the `def split(data_dir)` function to split the data. The data is split as the course instructions guides. The available 100 tfrecord files are divided into 70% for training, 20% for testing, and 10% for validation. 
-
-The effect of cross validation can be seen in the behavior of the losses shown in the next training sections. For the reference model, all losses start at high value and then decrease steadily to 0.56 classification loss, 0.54 localization loss, and 0.113 localization loss. This makes the total losses equal to 2.97. This
+Cross validation aims at estimating the performance (or accuracy) of machine learning models. The purpose of cross–validation is to test the ability of a machine learning model to predict new data. In this project, I implemented the `def split(data_dir)` function to split the data. The data is split as the course instructions. The available 100 tfrecord files are randomly divided into 70% for training, 20% for testing, and 10% for validation. 
 
 ### Training 
 
 #### Reference experiment
 **This section should detail the results of the reference experiment. It should includes training metrics and a detailed explanation of the algorithm's performances.**
 
-The first part here was to produce the `pipeline_new.config` file as described in the course instructions. I struggled to get the GPU on my machine working with the docker container provided with the course, but managed to get it working at the end. I documented the steps [here](https://knowledge.udacity.com/questions/725574#726069). 
+The first part here was to produce the `pipeline_new.config` file as described in the course instructions. 
 
 I made sure the GPU is utilized in the training using `nvtop` as explained by the instructor. My GPU has 8.0 GB ram and the training took a bit less than four hours. The following image indicates full resource utilization, which is great I think. Thanks for pointing out such useful tools. 
 
@@ -34,7 +34,7 @@ The reference training process is carried out with the generated `pipleline_new.
 
 ![](results/train_losses.png)
 
-The training progesses with too many fluctiations in the losses and in the total loss. This behavior was expected, and is then adjusted in the following imrovement. It worths notinig that I changed the batch size to be 2 for the reference and improve models. The reference model uses the following augemntations by default. 
+The training progesses with too many fluctiations in the losses and in the total loss. For the reference model, all losses start at high value and then decrease steadily to 0.56 classification loss, 0.54 localization loss, and 0.113 localization loss. This makes the total losses equal to 2.97. This behavior was expected, and is then adjusted in the following imrovement. It worths notinig that I changed the batch size to be 2 for the reference and improve models. The reference model uses the following augemntations by default. 
 
 ```
 data_augmentation_options {
