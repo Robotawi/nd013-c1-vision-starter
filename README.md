@@ -121,6 +121,17 @@ python experiments/model_main_tf2.py --model_dir=experiments/training/improve/ -
 tensorboard --logdir=training
 ```
 
+7. After we are happy with the trained model, we can export is as follows
+```
+python experiments/exporter_main_v2.py --input_type image_tensor --pipeline_config_path experiments/training/improve/pipeline_new.config --trained_checkpoint_dir experiments/training/improve --output_directory experiments/training/improve/exported_model/my_improve_model
+```
+8. To run inference on a video to make animation, like the one shown at the end of this file, please run the following command.
+```
+python inference_video.py --labelmap_path label_map.pbtxt --model_path experiments/training/improve/exported_model/my_improve_model/saved_model/ --tf_record_path waymo/downloaded_data/processed/test/segment-10017090168044687777_6380_000_6400_000_with_camera_labels.tfrecord --config_path experiments/training/improve/pipeline_new.config --output_path animation.mp4
+```
+
+
+
 **This would conclude the project environment setup and instructions to run the code. Now, I will present the project requirements described by Udacity's [project submission template](https://github.com/udacity/nd013-c1-vision-starter#submission-template).**
 ___
 
