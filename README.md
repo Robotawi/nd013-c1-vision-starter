@@ -13,57 +13,40 @@ I wanted to use my local GPU computer for the project because this is what I wil
 I started locally on my Linux 18.04 machine with GPU with this [docker file](https://github.com/Robotawi/nd013-c1-vision-starter/blob/main/build/Dockerfile) provided with the course. The most practical way to use this docker file, I would say with confidence, is to be with vscode container development. The steps are as follows
 
 01. Install vscode.
-02. Install vscode extensions called and `remote development` and remote - `containers`.
+02. Install vscode extensions called and `remote development` and `remote - containers`.
 03. Reload vscode withCtrl+Shit+P and select `Developer: Reload Window`.
 04. Navigate to the build directory from the terminal and run `code .`. vscode will ask to open in a container, agree with that. It will start building the container. 
 
 Now we can access the container, but can not use the GPU inside it. The following steps fix this issue. Main point: Make sure the Nvidia drivers are installed in your machine and inside the container. Steps 5 to 7 should run on your machine and inside the container. Notice I am not using sudo because the container gives you root access.
 
 05. Add PPA GPU Drivers repository to the system to install NVIDIA drivers
-
 ```
 add-apt-repository ppa:graphics-drivers/ppa
 
 ```
-
 06.  Identify GPU Model and Available Drivers.
-
 ```
 ubuntu-drivers devices
-
 ```
-
 This command will show driver version like nvidia-450
-
 07. Install Nvidia Driver (notice is must be > nvidia-450 ) because the container has CUDA 10.2 by default.  you have a look [here]( you have a look here, you can see the Nvidia drivers versions required for each CUDA version. On my machine, I installed version 470 and), you can see the Nvidia drivers versions required for each CUDA version. On my machine, I installed version 470.
-
 ```
 apt install nvidia-470
-
 ```
-
 If the above does not work, try the next
-
 ```
 apt install nvidia-driver-470
-
 ```
-
 08.  Install CUDA toolkit 
-
 ```
 sudo apt install nvidia-cuda-toolkit
 ```
-
 We can make sure the installation is correct as follows
 
 ```
 nvcc --version
-
 ```
-
 It should show something similar to
-
 ```
 nvcc: NVIDIA (R) Cuda compiler driver
 Copyright (c) 2005-2021 NVIDIA Corporation
@@ -71,24 +54,19 @@ Built on Sun_Feb_14_21:12:58_PST_2021
 Cuda compilation tools, release 11.2, V11.2.152
 Build cuda_11.2.r11.2/compiler.29618528_0
 ```
-
 09. Expose your host GPU devices to the container when you run it. Add the following options
 As we are developing inside a vscode container, add the following lines to the runArgs of the devcontainer.json file.
-
 ```
 "--gpus","all",
 "--device","/dev/nvidia0:/dev/nvidia0",
 "--device","/dev/nvidiactl:/dev/nvidiactl",
 "--device","/dev/nvidia-uvm:/dev/nvidia-uvm",
 ```
-
 10. run the docker container with the above options and other options mentioned in the instructions. Then, to make sure everything is working as expected, run the following command (inside the container)
-
 ```
 nvidia-smi
 
 ```
-
 It should show the Nvidia driver and CUDA versions.
 
 ![](build/nvidia-smi.png)
