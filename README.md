@@ -73,9 +73,51 @@ It should show the Nvidia driver and CUDA versions.
 
 At this point, the container can see the GPU and when training, it will be utilized and you can make sure by running the same command and checking the memory utilization (pointed to with an arrow).
 
-### Instructions to run the project
+### Instructions to run the project code
 
- 
+ 1. The first goal of this project is to download the data from the Waymo's Google Cloud bucket to your local machine. For this project, we only need a subset of the data provided (for example, we do not need to use the Lidar data). Therefore, we are going to download and trim immediately each file. In `download_process.py`, you can view the `create_tf_example` function, which will perform this processing. This function takes the components of a Waymo Tf record and saves them in the Tf Object Detection api format. An example of such function is described [here](https://tensorflow-object-detection-api-tutorial.readthedocs.io/en/latest/training.html#create-tensorflow-records). We are already providing the `label_map.pbtxt` file.
+
+**NOTICE: I will assume in the following part that the commands run from the project directory. I will use the names of directories that I used, but feel free to use your desired directory names.**
+
+To download the data, please run the following command:
+```
+python download_process.py --data_dir waymo/downloaded_data/processed --temp_dir waymo/downloaded_data/temp
+```
+
+The script will download 100 files so be patient! Once the script is done, you can look inside your data_dir folder to see if the files have been downloaded and processed correctly.
+
+2. Now that we have downloaded and processed the data, we explore the dataset! This is the most important task of any machine learning project. To do so, open the `Exploratory Data Analysis` notebook. In this notebook, I  implemented the `display_instances` function to display images and annotations using `matplotlib`. Here is a link to the [Exploratory Data Analysis](https://github.com/Robotawi/nd013-c1-vision-starter/blob/main/Exploratory%20Data%20Analysis.ipynb) notebook. We can see  the notebooks shuffles data and dispays 10 random images with colored annotations for different classes. It also displays the data diversity/distribution bar chart. 
+
+3. Now we are familiar with the data. The next step is to create different splits: training, validation and testing. I implemented the `split_data` function in the `create_splits.py` file to do that. The files are loaded from the download directory and split/moved according to the ratios of 70% for training, 20% for testing, and 10% for validation.
+
+```
+python create_splits.py --data_dir waymo/downloaded_data/processed
+```
+
+4. Now we are ready for training. The TensorFlow Object Detection API relies on **config files**. This project has two config files, one is reference and the other is for improved training. This config file for a SSD Resnet 50 640x640 model. You can learn more about the Single Shot Detector [here](https://arxiv.org/pdf/1512.02325.pdf). The reference config file is `experiments/training/reference/pipeline_new.config` and the improve is `experiments/training/improve/pipeline_new.config`.
+
+However, if you want to make a new config gile, please download the [pretrained model](http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz) and move it to `experiments/training/pretrained-models/`.
+
+Then, we need to edit the config file to change the location of the training and validation files, as well as the location of the label_map file, pretrained weights. We also need to adjust the batch size. To do so, run the following (notice: from the project directory): 
+```
+python edit_config.py --train_dir waymo/downloaded_data/processed/train --eval_dir waymo/downloaded_data/processed/val --batch_size 4 --checkpoint experiments/training/pretrained-models/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8/checkpoint/ckpt-0 --label_map label_map.pbtxt
+```
+This creates a new config file called `pipeline_new.config`.
+
+5. To launch training and evaluation procecess for my improved model, please do the following. 
+
+Launch the training process:
+```
+python experiments/model_main_tf2.py --model_dir=experiments/training/improve/ --pipeline_config_path=experiments/training/improve/pipeline_new.config
+```
+
+Launch the evaluation process: 
+```
+python experiments/model_main_tf2.py --model_dir=experiments/training/improve/ --pipeline_config_path=experiments/training/improve/pipeline_new.config --checkpoint_dir=experiments/training/improve
+```
+
+6. To monitor the training, you can launch a tensorboard instance by running `tensorboard --logdir=training`. 
+
 
 ### Dataset analysis
 
