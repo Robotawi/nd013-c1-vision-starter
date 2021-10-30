@@ -10,7 +10,7 @@ I wanted to use my local GPU computer for the project because this is what I wil
 
 ### Instructions to install the dependencies
 
-I started locally on my Linux 18.04 machine with GPU with this [docker file](./build/DockerFile) provided with the course. The most practical way to use this docker file, I would say with confidence, is to be with vscode container development. The steps are as follows
+I started locally on my Linux 18.04 machine with GPU with this [docker file](https://github.com/Robotawi/nd013-c1-vision-starter/blob/main/build/Dockerfile) provided with the course. The most practical way to use this docker file, I would say with confidence, is to be with vscode container development. The steps are as follows
 
 01. Install vscode.
 02. Install vscode extensions called and `remote development` and remote - `containers`.
