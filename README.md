@@ -13,7 +13,7 @@ I struggled to get the GPU on my machine working with the docker container provi
 ### Dataset analysis
 
 To become one with the data, as the instructor recommends, I implemented the `display_instances(batch)` function and used it to display 10 images from the dataset. The shown images are different everytime and they show different streets and views of objects. This means the collected data is diverse and have good potential for producing good inference behavior. The following is a sample of the shown images. 
-![](results/exp_data_results.png)
+![](results/exp_data_results_with_labels.png)
 
 ### Cross validation
 
