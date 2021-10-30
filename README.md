@@ -96,7 +96,7 @@ python create_splits.py --data_dir waymo/downloaded_data/processed
 
 4. Now we are ready for training. The TensorFlow Object Detection API relies on **config files**. This project has two config files, one is reference and the other is for improved training. This config file for a SSD Resnet 50 640x640 model. You can learn more about the Single Shot Detector [here](https://arxiv.org/pdf/1512.02325.pdf). The reference config file is `experiments/training/reference/pipeline_new.config` and the improve is `experiments/training/improve/pipeline_new.config`.
 
-However, if you want to make a new config gile, please download the [pretrained model](http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz) and move it to `experiments/training/pretrained-models/`.
+However, if you want to make a new config file, please download the [pretrained model](http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz) and move it to `experiments/training/pretrained-models/`.
 
 Then, we need to edit the config file to change the location of the training and validation files, as well as the location of the label_map file, pretrained weights. We also need to adjust the batch size. To do so, run the following (notice: from the project directory): 
 ```
@@ -104,7 +104,7 @@ python edit_config.py --train_dir waymo/downloaded_data/processed/train --eval_d
 ```
 This creates a new config file called `pipeline_new.config`.
 
-5. To launch training and evaluation procecess for my improved model, please do the following. 
+5. To launch training and evaluation procecess **for my improved model**, please do the following. 
 
 Launch the training process:
 ```
@@ -118,6 +118,8 @@ python experiments/model_main_tf2.py --model_dir=experiments/training/improve/ -
 
 6. To monitor the training, you can launch a tensorboard instance by running `tensorboard --logdir=training`. 
 
+This would conclude the project environment setup and instructions to run the code. 
+___
 
 ### Dataset analysis
 
