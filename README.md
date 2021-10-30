@@ -116,17 +116,38 @@ Launch the evaluation process:
 python experiments/model_main_tf2.py --model_dir=experiments/training/improve/ --pipeline_config_path=experiments/training/improve/pipeline_new.config --checkpoint_dir=experiments/training/improve
 ```
 
-6. To monitor the training, you can launch a tensorboard instance by running `tensorboard --logdir=training`. 
+6. To monitor the training, you can launch a tensorboard instance by running 
+```
+tensorboard --logdir=training
+```
 
-This would conclude the project environment setup and instructions to run the code. 
+**This would conclude the project environment setup and instructions to run the code. Now, I will present the project requirements described by Udacity's [project submission template](https://github.com/udacity/nd013-c1-vision-starter#submission-template).**
 ___
 
-### Dataset analysis
+### Dataset
+
+#### Dataset analysis
 
 To become one with the data, as the instructor recommends, I implemented the `display_instances(batch)` function and used it to display 10 images from the dataset. The shown images are different everytime and they show different streets and views of objects. This means the collected data is diverse and have good potential for producing good inference behavior. The following is a sample of the shown images. 
 ![](results/exp_data_results_with_labels.png)
 
-### Cross validation
+With many runs for data exploration, I can see that the data has different weather conditins. Some are on very sunny days, others are on normal sunny days, and some are in rainy and foggy weather. They show high ways as well as urban ways while pedistirans are going on the pavement or crossing the roads. The images show day and night detections and which is great to ensure the model can perform well in any time during the day despite the light changes. 
+
+#### Classes distribution
+I studied the distribution of the three classes in the dataset. The script creates the following bar chart and print the text. 
+
+![](results/cl_distrib_bars.png)
+
+In this batch of size 100000, classes are distributed as follows:
+
+ Vehicles are 1780245, representing 17.80245%.
+
+ Pedestrians are 518982, representing 5.18982%.
+
+ and Cyclists are 13431, representing 0.13431%
+
+
+#### Cross validation
 
 Cross validation aims at estimating the performance (or accuracy) of machine learning models. The purpose of cross–validation is to test the ability of a machine learning model to predict new data. In this project, I implemented the `def split(data_dir)` function to split the data. The data is split as the course instructions. The available 100 tfrecord files are randomly divided into 70% for training, 20% for testing, and 10% for validation. 
 
@@ -282,18 +303,6 @@ Lastly, I want to compare the evaluations of the reference and the improve cases
 ![](results/eval_comp2.png)
 
 I noticed there is a very limited number of cyclists in the data, which I think should be reported. It is very important as such cyclists usually go on the road near to cars, not like pedestrians. 
-
-I studied the distribution of the three classes on a batch of 10000 elements. The script creates the following bar chart and text. 
-
-![](results/cl_distrib_bars.png)
-
-In this batch of size 100000, classes are distributed as follows:
-
- Vehicles are 1780245, representing 17.80245%.
-
- Pedestrians are 518982, representing 5.18982%.
-
- and Cyclists are 13431, representing 0.13431%
 
 ## Inference Video
 
