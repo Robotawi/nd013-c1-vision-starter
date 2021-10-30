@@ -172,6 +172,19 @@ Lastly, I want to compare the evaluations of the reference and the improve cases
 
 I noticed there is a very limited number of cyclists in the data, which I think should be reported. It is very important as such cyclists usually go on the road near to cars, not like pedestrians. 
 
+I studied the distribution of the three classes on a batch of 10000 elements. The script creates the following bar chart and text. 
+
+![](results/cl_distrib_bars.png)
+
+In this batch of size 100000, classes are distributed as follows:
+
+ Vehicles are 1780245, representing 17.80245%.
+
+ Pedestrians are 518982, representing 5.18982%.
+
+ and Cyclists are 13431, representing 0.13431%
+
+## Inference Video
 
 The following is a gif video of the inference performance
 
